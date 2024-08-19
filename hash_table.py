@@ -1,3 +1,5 @@
+import csv
+
 class HashTable:
     def __init__(self, size=40):
         """Initialize the hash table with a specific size."""
@@ -19,11 +21,11 @@ class HashTable:
                 bucket[i] = (key, {"address": address, "deadline": deadline, "city": city, "zip_code": zip_code, "weight": weight, "status": status})
                 return
             
-            # If key not found, append the new key-value pair
+        # If key not found, append the new key-value pair
         bucket.append((key, {"address": address, "deadline": deadline, "city": city, "zip_code": zip_code, "weight": weight, "status": status}))
 
     def lookup(self, key):
-        """Lookup a value by its key in the hash table"""
+        """Lookup a value by its key in the hash table."""
         index = self._hash(key)
         bucket = self.table[index]
 
@@ -33,23 +35,35 @@ class HashTable:
             
         return None #Return None if key not found
     
-    # Example Usage
+    def load_from_csv(self, csv_file):
+        """Load data from a CSV file and insert it into the hash table."""
+        with open(csv_file, mode='r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                self.insert(
+                    int(row['Package ID']), 
+                    row['Address'], 
+                    row['Delivery Deadline'], 
+                    row['City'], 
+                    row['Zip'], 
+                    float(row['Weight KILO']), 
+                    "At hub"  # You can change this default status as needed
+                )
+
+# Example Usage
 if __name__ == "__main__":
-    #Create a hash table instance
+    # Create a hash table instance
     ht = HashTable()
 
-    # Insert some test data
-    ht.insert(1, "123 Elm St", "10:30 AM", "Salt Lake City", "84101", 5, "At hub")
-    ht.insert(2, "456 Oak St", "EOD", "Salt Lake City", "84102", 10, "At hub")
-    ht.insert(3, "789 Pine St", "12:00 PM", "Salt Lake City", "84103", 7, "At hub")
+    # Load package data from the CSV
+    ht.load_from_csv('./data/package_data.csv')
 
-    # Lookup a package
+    # Lookup and print a package
     package = ht.lookup(1)
     print(f"Package 1 details: {package}")
 
     package = ht.lookup(2)
     print(f"Package 2 details: {package}")
 
-    package = ht.lookup(4) # Non-existent key
-    print(f"Package 4 details: {package}") # Should print None
-
+    package = ht.lookup(4) 
+    print(f"Package 4 details: {package}") 
