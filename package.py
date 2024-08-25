@@ -1,5 +1,6 @@
 class Package:
     def __init__(self, ID, address, city, state, zipcode, deadline, weight, status, notes):
+        #Package details
         self.ID = ID
         self.address = address
         self.city = city
@@ -13,6 +14,7 @@ class Package:
         self.departure_time = None
 
     def update_status(self, current_time):
+         # Update the package's status based on the current time
         if self.delivery_time and current_time >= self.delivery_time:
             self.status = "Delivered"
         elif self.departure_time and current_time >= self.departure_time:
