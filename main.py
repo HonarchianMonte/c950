@@ -1,3 +1,6 @@
+# Monte Honarchian
+# Student ID: 011467947
+
 import csv
 import datetime
 from truck import Truck
@@ -43,7 +46,7 @@ def distance_in_between(x_value, y_value):
         distance = CSV_Distance[y_value][x_value]
     return float(distance)
 
-# Method to get address number from string literal of address
+# Method to get address number from string
 def extract_address(address):
     for row in CSV_Address:
         if address in row[2]:
@@ -111,7 +114,7 @@ def start_simulation():
     total_time = max(truck1.time, truck2.time, truck3.time) - datetime.timedelta(hours=8)
     print(f"Total mileage for all trucks: {total_mileage:.1f} miles")
     print(f"Total time for all trucks combined: {total_time}")
-    
+
 def convert_time(time_str):
     # Convert the input time string "HH:MM AM/PM" to a datetime.timedelta object
     time_obj = datetime.datetime.strptime(time_str, '%I:%M %p')
@@ -123,6 +126,7 @@ def check_all_package_statuses():
 
     print(f"\nChecking package status at {check_time}\n")
 
+    # Display status for all packages on Truck 1
     print("Truck 1 Packages:")
     for packageID in truck1.packages:
         package = package_hash_table.lookup(packageID)
@@ -131,7 +135,8 @@ def check_all_package_statuses():
               f"Zipcode: {package.zipcode}, Deadline: {package.deadline}, "
               f"Weight: {package.weight}, Status: {package.status}, "
               f"Delivery Time: {package.delivery_time}")
-
+        
+    # Display status for all packages on Truck 2
     print("\nTruck 2 Packages:")
     for packageID in truck2.packages:
         package = package_hash_table.lookup(packageID)
@@ -141,6 +146,7 @@ def check_all_package_statuses():
               f"Weight: {package.weight}, Status: {package.status}, "
               f"Delivery Time: {package.delivery_time}")
 
+    # Display status for all packages on Truck 3
     print("\nTruck 3 Packages:")
     for packageID in truck3.packages:
         package = package_hash_table.lookup(packageID)
@@ -150,6 +156,7 @@ def check_all_package_statuses():
               f"Weight: {package.weight}, Status: {package.status}, "
               f"Delivery Time: {package.delivery_time}")
 
+#Individual Package Status
 def check_individual_package_status():
     package_id = int(input("Enter the package ID to check status: "))
     time_input = input("Enter the time to check status (HH:MM AM/PM): ")
@@ -165,6 +172,7 @@ def check_individual_package_status():
 
 def main_menu():
     while True:
+        # Display the main menu options
         print("\nWGUPS Routing Program")
         print("1. Start Delivery Simulation")
         print("2. Check All Package Statuses")
