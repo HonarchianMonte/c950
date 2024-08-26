@@ -1,3 +1,4 @@
+import datetime
 class Package:
     def __init__(self, ID, address, city, state, zipcode, deadline, weight, status, notes):
         #Package details
@@ -14,7 +15,9 @@ class Package:
         self.departure_time = None
 
     def update_status(self, current_time):
-         # Update the package's status based on the current time
+        if self.ID == 9 and current_time >= datetime.timedelta(hours=10, minutes=20):
+            self.address = "410 S State St"
+            self.zipcode = "84111"
         if self.delivery_time and current_time >= self.delivery_time:
             self.status = "Delivered"
         elif self.departure_time and current_time >= self.departure_time:
